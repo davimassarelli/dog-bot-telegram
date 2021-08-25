@@ -40,7 +40,9 @@ def fato(message):
 
 @bot.message_handler(commands=['ola', 'start'])
 def ola(message):
-    msg = ''' Olá, como vai você? '''
+    msg = ''' Olá, como vai você? 
+    Para fotos digite "auau"
+    Para fatos curiosos digite "fato"'''
     bot.send_message(message.chat.id, msg)
 
 
