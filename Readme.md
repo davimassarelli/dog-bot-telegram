@@ -132,6 +132,18 @@ Para recebê-las utilizaremos as seguintes APIs:
 ]
 ```
 
+ou 
+
+[Dog API](https://github.com/kinduff/dog-api) `https://dog-api.kinduff.com/api/facts?number=1`
+
+```
+{
+    "facts":["A dog’s sense of smell is more than 100,000 times stronger than that of a human."],
+    "success":true
+}
+```
+
+
 As informações chegarão como json, em dicionários. Para recebê-las utilizaremos o módulo request para fazer a solicitação GET.
 
 ```
@@ -161,13 +173,17 @@ def auau(message):
 Agora, buscaremos os fatos, que seguirão o mesmo princípio da imagem, mas agora manipularemos um texto.
 Lembre-se de colocar a função que busca o fato antes do handler.
 
-OBS.: o fato veio como um dicionário dentro de uma lista, razão pela qual buscamos o index 0 antes do fato.
+OBS.1: No caso do Dog-Facts-API o fato veio como um dicionário dentro de uma lista, razão pela qual buscamos o index 0 antes do fato.
+`fato = conteudo[0]['fact']`
 
+OBS.2: Para o DOG API, os fatos estarão dispostos numa lista, dentro do dicionário.
 ```
 def pegar_fato():
-    conteudo = requests.get('https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?number=1').json()
-    fato = conteudo[0]['fact']
-    return fato
+    # conteudo = requests.get('https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?number=1').json()
+    conteudo = requests.get('https://dog-api.kinduff.com/api/facts?number=1').json()
+    fato = conteudo['facts'][0]
+    fato_br = lt.translate(fato, 'en', 'pt')
+    return fato_br
 
 @bot.message_handler(commands=['fato'])
 def fato(message):

@@ -18,8 +18,9 @@ def pegar_url():
 
 
 def pegar_fato():
-    conteudo = requests.get('https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?number=1').json()
-    fato = conteudo[0]['fact']
+    # conteudo = requests.get('https://dog-facts-api.herokuapp.com/api/v1/resources/dogs?number=1').json()
+    conteudo = requests.get('https://dog-api.kinduff.com/api/facts?number=1').json()
+    fato = conteudo['facts'][0]
     fato_br = lt.translate(fato, 'en', 'pt')
     return fato_br
 
@@ -38,7 +39,15 @@ def fato(message):
     bot.send_message(message.chat.id, fato)
 
 
+@bot.message_handler(commands=['criador', 'creator'])
+@bot.message_handler(regexp=r'criador')
+def criador(message):
+    criador = 'https://github.com/davimassarelli'
+    bot.send_message(message.chat.id, criador)
+
+
 @bot.message_handler(commands=['ola', 'start'])
+@bot.message_handler(regexp=r'ola')
 def ola(message):
     msg = ''' Olá, como vai você? 
     Para fotos digite "auau"
